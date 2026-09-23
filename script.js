@@ -1,0 +1,8 @@
+const intro=document.querySelector("#intro"),main=document.querySelector("#main"),bye=document.querySelector("#bye"),faces=document.querySelector("#faces");let entered=false,had=false,shown=false;
+for(let i=0;i<20;i++){let f=document.createElement("div");f.className="face";let im=document.createElement("img");im.src="./sintatata.png?v=4";f.appendChild(im);f.style.left=Math.random()*92+"%";f.style.top=Math.random()*84+"%";f.style.setProperty("--x",(Math.random()*260-130)+"px");f.style.setProperty("--y",(Math.random()*200-100)+"px");f.style.setProperty("--a",(Math.random()*50-25)+"deg");f.style.setProperty("--r",(Math.random()*90-45)+"deg");f.style.setProperty("--d",(2+Math.random()*3.5)+"s");faces.appendChild(f)}
+document.querySelector("#matrix").textContent=("SINTATATA 01010011 ERROR SINTATATA.EXE ACCESS_DENIED SYSTEM_FAILURE SINTATATA_PROTOCOL ").repeat(190);
+function goodbye(){if(!entered||shown)return;shown=true;main.style.display="none";bye.classList.add("show")}
+document.querySelector("#click").onclick=async()=>{entered=true;intro.style.display="none";main.style.display="block";try{await document.documentElement.requestFullscreen();had=true}catch(e){}};
+document.addEventListener("fullscreenchange",()=>{if(document.fullscreenElement)had=true;else if(entered&&had)goodbye()});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&entered)setTimeout(goodbye,120)});
+window.addEventListener("beforeunload",e=>{if(entered&&!shown){e.preventDefault();e.returnValue=""}});
